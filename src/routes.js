@@ -1,9 +1,10 @@
 const { Router } = require('express');
+const ProductController = require('./controllers/ProductController');
 
-const routers = Router();
+const routes = Router();
 
-routers.get('/', (req, res) => {
-  res.status(200).send(req.params);
-});
+routes.get('/products', ProductController.index);
+routes.get('/products/:slug', ProductController.show);
+routes.post('/products', ProductController.store);
 
-module.exports = routers;
+module.exports = routes;

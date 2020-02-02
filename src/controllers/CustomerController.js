@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const CustomerRepository = require('../repositories/CustomerRepository');
 
 module.exports = {
@@ -20,8 +21,9 @@ module.exports = {
   },
   async store(req, res) {
     const { name, email, password } = req.body;
+    const hashPassword = await bcrypt.hash(password, 10);
     try {
-      const customer = await CustomerRepository.save(name, email, password);
+      const customer = await CustomerRepository.save(name, email, hashPassword);
       return res.status(201).send(customer);
     } catch (err) {
       return res.status(401).send(err);

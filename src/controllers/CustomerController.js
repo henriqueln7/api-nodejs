@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const CustomerRepository = require('../repositories/CustomerRepository');
+const emailService = require('../services/EmailService');
 
 module.exports = {
   async index(req, res) {
@@ -24,8 +25,10 @@ module.exports = {
     const hashPassword = await bcrypt.hash(password, 10);
     try {
       const customer = await CustomerRepository.save(name, email, hashPassword);
+      emailService.send(email, 'Bem vindo ao meu projeto', `<strong> Seja bem vindo ao meu projeto, ${name}. :) </strong>`);
       return res.status(201).send(customer);
     } catch (err) {
+      console.log(err);
       return res.status(401).send(err);
     }
   },

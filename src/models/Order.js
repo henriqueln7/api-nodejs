@@ -9,7 +9,7 @@ const OrderSchema = moongose.Schema({
     type: moongose.Schema.Types.ObjectId,
     ref: 'Customer',
   },
-  createDate: {
+  created_at: {
     type: Date,
     required: true,
     default: Date.now(),
@@ -25,10 +25,6 @@ const OrderSchema = moongose.Schema({
       type: Number,
       required: true,
       default: 1,
-    },
-    price: {
-      type: Number,
-      required: true,
     },
     product: {
       type: moongose.Schema.Types.ObjectId,

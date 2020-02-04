@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const CustomerRepository = require('../repositories/CustomerRepository');
 const emailService = require('../services/EmailService');
+const AuthService = require('../services/AuthService');
 
 module.exports = {
   async index(req, res) {
@@ -28,7 +29,6 @@ module.exports = {
       emailService.send(email, 'Bem vindo ao meu projeto', `<strong> Seja bem vindo ao meu projeto, ${name}. :) </strong>`);
       return res.status(201).send(customer);
     } catch (err) {
-      console.log(err);
       return res.status(401).send(err);
     }
   },
@@ -53,6 +53,28 @@ module.exports = {
       return res.status(200).send({ message: 'Cliente deletado :)' });
     } catch (e) {
       return res.status(400);
+    }
+  },
+  async authenticate(req, res) {
+    const { email, password } = req.body;
+    const hashPassword = await bcrypt.hash(password, 10);
+    try {
+      const customer = await CustomerRepository.authenticate({ email, hashPassword });
+      const token = await AuthService.generateToken({ email });
+
+      if (!customer) {
+        return res.status(404).json({ error: 'Customer not found.' });
+      }
+
+      return res.status(200).json({
+        token,
+        data: {
+          name: customer.name,
+          email: customer.email,
+        },
+      });
+    } catch (err) {
+      return res.status(401).json(err);
     }
   },
 };

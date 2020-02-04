@@ -28,6 +28,10 @@ class CustomerRepository {
   static delete(id) {
     return Customer.findByIdAndDelete(id);
   }
+
+  static authenticate({ email }) {
+    return Customer.findOne({ email });
+  }
 }
 
 module.exports = CustomerRepository;

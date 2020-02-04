@@ -8,6 +8,7 @@ const CustomerSchema = moongose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,

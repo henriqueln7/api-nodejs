@@ -10,6 +10,8 @@ mongoose.connect('mongodb+srv://omnistack:omnistack@cluster0-oxeqf.mongodb.net/t
 });
 
 app.use(express.json());
-app.use(routes);
+app.use('/customers', routes.CustomerRoute);
+app.use('/products', routes.ProductRoute);
+app.use('/orders', routes.OrderRoute);
 
 app.listen(3333);

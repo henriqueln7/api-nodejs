@@ -13,5 +13,6 @@ app.use(express.json());
 app.use('/customers', routes.CustomerRoute);
 app.use('/products', routes.ProductRoute);
 app.use('/orders', routes.OrderRoute);
+app.use(routes.AuthRoutes);
 
 app.listen(3333);

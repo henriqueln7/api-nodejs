@@ -9,7 +9,7 @@ class CustomerRepository {
     return Customer.findById(id, 'name email');
   }
 
-  static save(name, email, password) {
+  static save({ name, email, password }) {
     return Customer.create({
       name,
       email,
@@ -29,8 +29,8 @@ class CustomerRepository {
     return Customer.findByIdAndDelete(id);
   }
 
-  static authenticate({ email }) {
-    return Customer.findOne({ email });
+  static authenticate(email) {
+    return Customer.findOne({ email }).select('+password');
   }
 }
 

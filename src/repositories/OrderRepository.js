@@ -1,4 +1,3 @@
-const guid = require('guid');
 const Order = require('../models/Order');
 
 class CustomerRepository {
@@ -14,8 +13,7 @@ class CustomerRepository {
       .populate('items.product');
   }
 
-  static save(customer, items) {
-    const number = guid.raw().substring(0, 5);
+  static save({ customer, items, number }) {
     return Order.create({
       number,
       customer,

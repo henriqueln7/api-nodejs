@@ -1,7 +1,7 @@
 const sendgrid = require('@sendgrid/mail');
+require('dotenv').config();
 
-const KEY = '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';
-sendgrid.setApiKey(KEY);
+sendgrid.setApiKey(process.env.SENDGRID_KEY);
 
 module.exports = {
   send(to, subject, body) {

@@ -1,4 +1,6 @@
-const OrderRepository = require('../repositories/OrderRepository');
+const guid = require("guid");
+const OrderRepository = require("../repositories/OrderRepository");
+const AuthService = require("../services/AuthService");
 
 module.exports = {
   async index(req, res) {
@@ -17,9 +19,18 @@ module.exports = {
   },
 
   async store(req, res) {
-    const { customer, items } = req.body;
+    const { items } = req.body;
+    const token =
+      req.body.token || req.query.token || req.headers["x-acess-token"];
+
+    const data = AuthService.decodeToken(token);
+    const number = guid.raw().substring(0, 5);
     try {
-      const order = await OrderRepository.save(customer, items);
+      const order = await OrderRepository.save({
+        customer: data._id,
+        number,
+        items
+      });
       return res.status(201).send(order);
     } catch (err) {
       return res.status(400).send(err);
@@ -30,9 +41,9 @@ module.exports = {
     const { id } = req.params;
     try {
       await OrderRepository.delete(id);
-      return res.status(201).send({ message: 'Deleted' });
+      return res.status(201).send({ message: "Deleted" });
     } catch (err) {
       return res.status(400).send(err);
     }
-  },
+  }
 };

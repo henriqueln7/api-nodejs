@@ -17,7 +17,7 @@ const authorize = (req, res, next) => {
     if (error) {
       return res.status(401).json({ error: 'Invalid token' });
     }
-    return next();
+    next();
   });
 };
 

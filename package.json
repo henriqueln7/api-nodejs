@@ -4,14 +4,23 @@
   "main": "index.js",
   "author": "Henrique Lopes <henriquelopees7@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "npx nodemon ./src/index.js"
+  },
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.0"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.5.1",
+    "bcrypt": "^3.0.7",
     "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "http": "^0.0.0"
+    "guid": "^0.0.12",
+    "http": "^0.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.10"
   }
 }
